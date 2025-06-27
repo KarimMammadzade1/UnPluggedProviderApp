@@ -1,6 +1,7 @@
 package r.team.unpluggedproviderapp.presentation.feature_provider
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -19,6 +20,9 @@ class ProviderFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderB
     private val viewRender = uiStateDiffRender {
         ProviderViewState::isLoading{ isLoading ->
             binding.loadingView.rootView.isVisible = isLoading
+        }
+        ProviderViewState::devicesData{ data ->
+            Log.e("testing", "$data ", )
         }
         ProviderViewState::errorMessage{ error ->
             //state style error

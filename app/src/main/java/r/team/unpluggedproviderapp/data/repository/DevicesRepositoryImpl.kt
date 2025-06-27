@@ -16,7 +16,7 @@ class DevicesRepositoryImpl @Inject constructor(
         return processResultWrapper(handleResult {
             devicesDataSource.getDevices()
         }) { result ->
-            result?.devices?.let { devicesResponse ->
+            result?.let { devicesResponse ->
                 devicesResponse.map { it.toDO() }
             } ?: emptyList()
         }

@@ -12,7 +12,6 @@ import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
-import r.team.unpluggedproviderapp.core_data.model.Result
 
 /**
  * Handles the result of an API call and returns a [ResultWrapper] representing the outcome.
@@ -22,13 +21,14 @@ import r.team.unpluggedproviderapp.core_data.model.Result
  * @return A [ResultWrapper] containing either the successful result or an error.
  *
  */
-inline fun <T : Serializable> handleResult(
-    apiCall: () -> Response<Result<T>>?
+inline fun <T> handleResult(
+    apiCall: () -> Response<T>?
 ): ResultWrapper<T?> {
     return try {
         val result = apiCall()
         if (result?.isSuccessful == true) {
-            ResultWrapper.Success(result.body()?.data)
+
+            ResultWrapper.Success(result.body())
         } else {
             val errorMessage = result?.errorBody()?.getErrorMessage()
             ResultWrapper.Error(

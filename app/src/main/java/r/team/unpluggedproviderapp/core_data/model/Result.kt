@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName
 import r.team.unpluggedproviderapp.core_domain.model.ErrorModelDO
 import java.io.Serializable
 
-data class Result<T : Serializable>(
-    @SerializedName("data")
-    val data: T? = null,
-    @SerializedName("error")
-    val error: String? = null,
-) : Serializable
+//data class Result<T : Serializable>(
+//    @SerializedName("data")
+//    val data: T? = null,
+//    @SerializedName("error")
+//    val error: String? = null,
+//) : Serializable
 //
 //data class Error(
 //    @SerializedName("errorCode")

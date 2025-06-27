@@ -1,6 +1,6 @@
 package r.team.unpluggedproviderapp.data.datasource.remote
 
-import r.team.unpluggedproviderapp.core_data.model.Result
+import r.team.unpluggedproviderapp.data.model.DeviceResponse
 import r.team.unpluggedproviderapp.data.model.DevicesResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -12,6 +12,6 @@ interface DevicesDataSource {
     }
 
     @GET(DEVICES)
-    suspend fun getDevices(): Response<Result<DevicesResponse>>
+    suspend fun getDevices(): Response<List<DeviceResponse>>
 
 }
