@@ -1,9 +1,7 @@
-package r.team.unpluggedproviderapp.presentation.feature_provider
+package r.team.unpluggedproviderapp.presentation.feature_devices
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
@@ -15,16 +13,20 @@ import r.team.unpluggedproviderapp.core_ui.state.uiStateDiffRender
 import r.team.unpluggedproviderapp.databinding.FragmentProviderBinding
 
 @AndroidEntryPoint
-class ProviderFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderBinding::inflate) {
-    private val viewModel: ProviderViewModel by viewModels()
+class DevicesFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderBinding::inflate) {
+    private val viewModel: DevicesViewModel by viewModels()
     private val viewRender = uiStateDiffRender {
-        ProviderViewState::isLoading{ isLoading ->
+        DevicesViewState::isLoading{ isLoading ->
             binding.loadingView.rootView.isVisible = isLoading
         }
-        ProviderViewState::devicesData{ data ->
-            Log.e("testing", "$data ", )
+        DevicesViewState::devicesData{ data ->
+            if (data.isEmpty()) {
+
+            } else {
+
+            }
         }
-        ProviderViewState::errorMessage{ error ->
+        DevicesViewState::errorMessage{ error ->
             //state style error
         }
     }
@@ -40,7 +42,7 @@ class ProviderFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderB
             render(viewLifecycleOwner, render = viewRender)
             collectEvent(lifecycle) { event ->
                 return@collectEvent when (event) {
-                    is ProviderViewEvent.ShowError -> {
+                    is DevicesViewEvent.ShowError -> {
                         Snackbar.make(
                             requireView(),
                             event.errorModelDO.message.toString(),

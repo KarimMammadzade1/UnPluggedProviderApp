@@ -7,6 +7,6 @@
 
     <fragment
         android:id="@+id/providerFragment"
-        android:name="r.team.unpluggedproviderapp.presentation.feature_provider.ProviderFragment"
+        android:name="r.team.unpluggedproviderapp.presentation.feature_devices.DevicesFragment"
         android:label="ProviderFragment" />
 </navigation>

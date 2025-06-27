@@ -1,4 +1,4 @@
-package r.team.unpluggedproviderapp.presentation.feature_provider
+package r.team.unpluggedproviderapp.presentation.feature_devices
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -12,12 +12,12 @@ import r.team.unpluggedproviderapp.domain.usecase.GetDevicesUseCase
 import javax.inject.Inject
 
 @HiltViewModel
-class ProviderViewModel @Inject constructor(
+class DevicesViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val getDevicesUseCase: GetDevicesUseCase
-) : CoreViewModel<ProviderViewState>(savedStateHandle),
-    UiStateDelegate<ProviderViewState, ProviderViewEvent> by
-    UiStateDelegateImpl(ProviderViewState()) {
+) : CoreViewModel<DevicesViewState>(savedStateHandle),
+    UiStateDelegate<DevicesViewState, DevicesViewEvent> by
+    UiStateDelegateImpl(DevicesViewState()) {
 
 
     fun fetchElements() {
@@ -36,7 +36,7 @@ class ProviderViewModel @Inject constructor(
 
                 is ResultWrapper.Error -> {
                     updateUiState { it.copy(isLoading = false) }
-                    sendEvent(ProviderViewEvent.ShowError(resultWrapper.error))
+                    sendEvent(DevicesViewEvent.ShowError(resultWrapper.error))
 
                 }
             }
