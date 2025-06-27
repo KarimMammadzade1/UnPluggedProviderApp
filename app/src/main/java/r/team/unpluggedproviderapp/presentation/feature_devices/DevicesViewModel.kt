@@ -9,13 +9,17 @@ import r.team.unpluggedproviderapp.core_ui.component.CoreViewModel
 import r.team.unpluggedproviderapp.core_ui.state.UiStateDelegate
 import r.team.unpluggedproviderapp.core_ui.state.UiStateDelegateImpl
 import r.team.unpluggedproviderapp.domain.model.DeviceResponseDO
+import r.team.unpluggedproviderapp.domain.usecase.GetDevicesFromDBUseCase
 import r.team.unpluggedproviderapp.domain.usecase.GetDevicesUseCase
+import r.team.unpluggedproviderapp.domain.usecase.SaveDevicesUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class DevicesViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val getDevicesUseCase: GetDevicesUseCase
+    private val getDevicesUseCase: GetDevicesUseCase,
+    private val saveDevicesUseCase: SaveDevicesUseCase,
+    private val getDevicesFromDBUseCase: GetDevicesFromDBUseCase
 ) : CoreViewModel<DevicesViewState>(savedStateHandle),
     UiStateDelegate<DevicesViewState, DevicesViewEvent> by
     UiStateDelegateImpl(DevicesViewState()) {
@@ -45,6 +49,37 @@ class DevicesViewModel @Inject constructor(
     }
 
     fun saveElements(data: List<DeviceResponseDO>) {
+        viewModelScope.launch {
+            when (val resultWrapper = saveDevicesUseCase.run(data)) {
+                is ResultWrapper.Success -> {
+                    sendEvent(DevicesViewEvent.SaveSuccessful)
+                }
 
+                is ResultWrapper.Error -> {
+                    sendEvent(DevicesViewEvent.ShowError(resultWrapper.error))
+                }
+            }
+        }
+    }
+
+    fun getElementsFromDB() {
+        viewModelScope.launch {
+            updateUiState { it.copy(isLoading = true) }
+            when (val resultWrapper = getDevicesFromDBUseCase.run(Unit)) {
+                is ResultWrapper.Success -> {
+                    updateUiState {
+                        it.copy(
+                            isLoading = false,
+                            devicesData = resultWrapper.success
+                        )
+                    }
+                }
+
+                is ResultWrapper.Error -> {
+                    updateUiState { it.copy(isLoading = false) }
+                    sendEvent(DevicesViewEvent.ShowError(resultWrapper.error))
+                }
+            }
+        }
     }
 }

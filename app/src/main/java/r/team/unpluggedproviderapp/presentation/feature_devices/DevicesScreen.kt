@@ -12,4 +12,5 @@ data class DevicesViewState(
 
 interface DevicesViewEvent {
     data class ShowError(val errorModelDO: ErrorModelDO = ErrorModelDO()) : DevicesViewEvent
+    object SaveSuccessful : DevicesViewEvent
 }

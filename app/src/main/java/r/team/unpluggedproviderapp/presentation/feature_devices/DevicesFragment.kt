@@ -50,6 +50,14 @@ class DevicesFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderBi
                         ).show()
                     }
 
+                    is DevicesViewEvent.SaveSuccessful -> {
+                        Snackbar.make(
+                            requireView(),
+                            "Saved successfully",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+
                     else -> {}
                 }
             }
@@ -61,6 +69,7 @@ class DevicesFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderBi
         with(binding) {
             fetchElementsButton.setOnClickListener {
                 viewModel.fetchElements()
+                //viewModel.getElementsFromDB()
             }
         }
     }
