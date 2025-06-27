@@ -1,7 +1,7 @@
 import java.io.InputStreamReader
 import java.util.Properties
 
-object Config {
+internal object Config {
     internal const val NAME_SPACE = "r.team.unpluggedproviderapp"
     internal const val APPLICATION_ID = "r.team.unpluggedproviderapp"
     internal const val VERSION_CODE = 1
@@ -27,6 +27,9 @@ internal fun getLocalProperty(key: String, file: String = "local.properties"): S
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.android.ksp)
+    alias(libs.plugins.hilt.android)
+
 }
 
 android {
@@ -59,7 +62,7 @@ android {
             buildConfigField(
                 "String",
                 "REST_API_URL",
-                getLocalProperty("BASE_URL_PROD")
+                getLocalProperty("BASE_URL_DEV")
             )
         }
 
@@ -99,4 +102,10 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.timber)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
 }
