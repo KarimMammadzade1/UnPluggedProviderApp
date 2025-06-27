@@ -11,6 +11,7 @@ import r.team.unpluggedproviderapp.core_ui.state.collectEvent
 import r.team.unpluggedproviderapp.core_ui.state.render
 import r.team.unpluggedproviderapp.core_ui.state.uiStateDiffRender
 import r.team.unpluggedproviderapp.databinding.FragmentProviderBinding
+import r.team.unpluggedproviderapp.domain.model.DeviceResponseDO
 
 @AndroidEntryPoint
 class DevicesFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderBinding::inflate) {
@@ -20,10 +21,9 @@ class DevicesFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderBi
             binding.loadingView.rootView.isVisible = isLoading
         }
         DevicesViewState::devicesData{ data ->
-            if (data.isEmpty()) {
-
-            } else {
-
+            if (data.isNotEmpty()) {
+                binding.fetchElementsButton.isVisible = false
+                initRV(data)
             }
         }
         DevicesViewState::errorMessage{ error ->
@@ -63,5 +63,12 @@ class DevicesFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderBi
                 viewModel.fetchElements()
             }
         }
+    }
+
+    private fun initRV(data: List<DeviceResponseDO>) {
+        val adapter = DevicesAdapter()
+        binding.devicesRecyclerview.adapter = adapter
+        adapter.submitList(data)
+        viewModel.saveElements(data)
     }
 }

@@ -8,6 +8,7 @@ import r.team.unpluggedproviderapp.core_domain.model.ResultWrapper
 import r.team.unpluggedproviderapp.core_ui.component.CoreViewModel
 import r.team.unpluggedproviderapp.core_ui.state.UiStateDelegate
 import r.team.unpluggedproviderapp.core_ui.state.UiStateDelegateImpl
+import r.team.unpluggedproviderapp.domain.model.DeviceResponseDO
 import r.team.unpluggedproviderapp.domain.usecase.GetDevicesUseCase
 import javax.inject.Inject
 
@@ -41,5 +42,9 @@ class DevicesViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun saveElements(data: List<DeviceResponseDO>) {
+
     }
 }
