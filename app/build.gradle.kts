@@ -64,6 +64,13 @@ android {
                 "REST_API_URL",
                 getLocalProperty("BASE_URL_DEV")
             )
+            buildConfigField(
+                "String",
+                "ALLOWED_CONSUMER_PACKAGE",
+                "\"r.team.unpluggedconsumerapp\""
+            )
+
+
         }
 
         debug {
@@ -73,6 +80,11 @@ android {
                 "String",
                 "REST_API_URL",
                 getLocalProperty("BASE_URL_DEV")
+            )
+            buildConfigField(
+                "String",
+                "ALLOWED_CONSUMER_PACKAGE",
+                "\"r.team.unpluggedconsumerapp\""
             )
         }
     }

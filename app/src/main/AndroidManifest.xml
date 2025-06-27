@@ -3,6 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <permission
+        android:name="r.team.unpluggedproviderapp.READ_DATA"
+        android:protectionLevel="signature" />
+    <permission
+        android:name="r.team.unpluggedproviderapp.WRITE_DATA"
+        android:protectionLevel="signature" />
+
     <application
         android:name=".ProviderApp"
         android:allowBackup="true"
@@ -23,6 +31,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".data.provider.DevicesContentProvider"
+            android:authorities="r.team.provider"
+            android:exported="true"
+            android:readPermission="r.team.unpluggedproviderapp.READ_DATA"
+            android:writePermission="r.team.unpluggedproviderapp.WRITE_DATA" />
     </application>
 
 </manifest>

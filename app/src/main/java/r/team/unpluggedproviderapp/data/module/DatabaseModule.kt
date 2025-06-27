@@ -27,6 +27,6 @@ object DatabaseModule {
     }
 
     @Provides
-    internal fun provideUserDao(database: DevicesDatabase): DevicesDAO = database.devicesDAO()
+    internal fun provideDevicesDao(database: DevicesDatabase): DevicesDAO = database.devicesDAO()
 
 }
