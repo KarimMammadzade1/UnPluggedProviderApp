@@ -16,7 +16,7 @@ import kotlinx.coroutines.sync.withLock
 /**
  * UiState - must be Data class, immutable
  */
-interface UiStateDelegate<UiState:CoreState, Event> {
+interface UiStateDelegate<UiState : CoreViewState, Event> {
 
     /**
      * Declarative description of the UI based on the current state.
@@ -60,7 +60,7 @@ interface UiStateDelegate<UiState:CoreState, Event> {
  * @param initialUiState Initial UI state.
  * @param singleLiveEventCapacity Channel capacity for SingleLiveEvent.
  */
-class UiStateDelegateImpl<UiState:UState, Event>(
+class UiStateDelegateImpl<UiState : CoreViewState, Event>(
     initialUiState: UiState,
     singleLiveEventCapacity: Int = Channel.BUFFERED,
     private val mutexState: Mutex = Mutex()
