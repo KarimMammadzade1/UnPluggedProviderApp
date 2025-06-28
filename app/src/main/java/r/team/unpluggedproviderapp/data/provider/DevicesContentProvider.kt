@@ -14,11 +14,6 @@ import r.team.unpluggedproviderapp.data.module.entrypoint.DevicesContentProvider
 
 class DevicesContentProvider : ContentProvider() {
 
-    companion object {
-        private const val ALLOWED_CONSUMER_PACKAGE = "r.team.unpluggedconsumerapp"
-
-    }
-
     private lateinit var devicesDao: DevicesDAO
 
     override fun onCreate(): Boolean {
