@@ -1,6 +1,7 @@
 import java.io.InputStreamReader
 import java.util.Properties
 
+// Todo - move config and function to centralized Config.Gradle.KTS
 internal object Config {
     internal const val NAME_SPACE = "r.team.unpluggedproviderapp"
     internal const val APPLICATION_ID = "r.team.unpluggedproviderapp"
