@@ -20,12 +20,6 @@ class DevicesFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderBi
         DevicesViewState::isLoading{ isLoading ->
             binding.loadingView.rootView.isVisible = isLoading
         }
-        DevicesViewState::devicesData{ data ->
-            if (data.isNotEmpty()) {
-                binding.fetchElementsButton.isVisible = false
-                initRV(data)
-            }
-        }
         DevicesViewState::errorMessage{ error ->
             //state style error
         }
@@ -33,7 +27,6 @@ class DevicesFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderBi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initClickListeners()
         bindViewModelActions()
     }
 
@@ -63,21 +56,5 @@ class DevicesFragment : CoreFragment<FragmentProviderBinding>(FragmentProviderBi
             }
 
         }
-    }
-
-    private fun initClickListeners() {
-        with(binding) {
-            fetchElementsButton.setOnClickListener {
-                viewModel.fetchElements()
-                //viewModel.getElementsFromDB()
-            }
-        }
-    }
-
-    private fun initRV(data: List<DeviceResponseDO>) {
-        val adapter = DevicesAdapter()
-        binding.devicesRecyclerview.adapter = adapter
-        adapter.submitList(data)
-        viewModel.saveElements(data)
     }
 }

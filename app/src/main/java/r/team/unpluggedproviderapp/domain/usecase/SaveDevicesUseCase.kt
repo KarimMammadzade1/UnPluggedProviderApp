@@ -8,8 +8,9 @@ import javax.inject.Inject
 
 class SaveDevicesUseCase @Inject constructor(
     private val devicesRepository: DevicesRepository
-) : CoreUseCase<List<DeviceResponseDO>, Unit>() {
-    override suspend fun run(params: List<DeviceResponseDO>): ResultWrapper<Unit> {
-        return devicesRepository.saveDevices(params)
+) : CoreUseCase<Unit, Unit>() {
+
+    override suspend fun run(params: Unit): ResultWrapper<Unit> {
+        return devicesRepository.saveDevices()
     }
 }

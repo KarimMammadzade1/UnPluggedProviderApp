@@ -7,5 +7,6 @@ interface DevicesRepository {
 
     suspend fun getDevices(): ResultWrapper<List<DeviceResponseDO>>
     suspend fun saveDevices(items: List<DeviceResponseDO>): ResultWrapper<Unit>
+    suspend fun saveDevices(): ResultWrapper<Unit>
     suspend fun getDevicesFromDB(): ResultWrapper<List<DeviceResponseDO>>
 }

@@ -17,40 +17,18 @@ import javax.inject.Inject
 @HiltViewModel
 class DevicesViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val getDevicesUseCase: GetDevicesUseCase,
     private val saveDevicesUseCase: SaveDevicesUseCase,
-    private val getDevicesFromDBUseCase: GetDevicesFromDBUseCase
 ) : CoreViewModel<DevicesViewState>(savedStateHandle),
     UiStateDelegate<DevicesViewState, DevicesViewEvent> by
     UiStateDelegateImpl(DevicesViewState()) {
 
-
-    fun fetchElements() {
-        viewModelScope.launch {
-            updateUiState { it.copy(isLoading = true) }
-            when (val resultWrapper = getDevicesUseCase.run(Unit)) {
-                is ResultWrapper.Success -> {
-
-                    updateUiState {
-                        it.copy(
-                            isLoading = false,
-                            devicesData = resultWrapper.success
-                        )
-                    }
-                }
-
-                is ResultWrapper.Error -> {
-                    updateUiState { it.copy(isLoading = false) }
-                    sendEvent(DevicesViewEvent.ShowError(resultWrapper.error))
-
-                }
-            }
-        }
+    init {
+        saveElements()
     }
 
-    fun saveElements(data: List<DeviceResponseDO>) {
+    private fun saveElements() {
         viewModelScope.launch {
-            when (val resultWrapper = saveDevicesUseCase.run(data)) {
+            when (val resultWrapper = saveDevicesUseCase.run(Unit)) {
                 is ResultWrapper.Success -> {
                     sendEvent(DevicesViewEvent.SaveSuccessful)
                 }
@@ -62,24 +40,4 @@ class DevicesViewModel @Inject constructor(
         }
     }
 
-    fun getElementsFromDB() {
-        viewModelScope.launch {
-            updateUiState { it.copy(isLoading = true) }
-            when (val resultWrapper = getDevicesFromDBUseCase.run(Unit)) {
-                is ResultWrapper.Success -> {
-                    updateUiState {
-                        it.copy(
-                            isLoading = false,
-                            devicesData = resultWrapper.success
-                        )
-                    }
-                }
-
-                is ResultWrapper.Error -> {
-                    updateUiState { it.copy(isLoading = false) }
-                    sendEvent(DevicesViewEvent.ShowError(resultWrapper.error))
-                }
-            }
-        }
-    }
 }

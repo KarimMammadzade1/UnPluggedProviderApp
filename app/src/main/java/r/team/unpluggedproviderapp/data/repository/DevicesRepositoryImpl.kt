@@ -61,5 +61,27 @@ class DevicesRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun saveDevices(): ResultWrapper<Unit> =
+        withContext(Dispatchers.IO) {
+            try {
+                val result = getDevices()
+                if (result is ResultWrapper.Success) {
+                    val devices = result.success
+                    val mapper = DeviceMapper()
+                    val entities = devices.map { item -> mapper.toEntity(item) }
+                    devicesDAO.upsertDevices(entities)
+                    ResultWrapper.Success(Unit)
+                } else {
+                    result as ResultWrapper.Error
+                }
+            } catch (e: Exception) {
+                ResultWrapper.Error(
+                    exception = e,
+                    message = e.message,
+                    error = ErrorModelDO(message = e.message)
+                )
+            }
+        }
+
 
 }
